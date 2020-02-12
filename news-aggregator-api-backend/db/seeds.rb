@@ -7,12 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 
-User.create(name: 'Luke', password: "password1")
-User.create(name: 'Luke', password: "password1")
-User.create(name: 'Luke', password: "password1")
-User.create(name: 'Luke', password: "password1")
-User.create(name: 'Luke', password: "password1")
-User.create(name: 'Luke', password: "password1")
+User.create(name: 'Cliff', password: "password1", location: '')
+User.create(name: 'Tiesha', password: "password1", location: '')
+User.create(name: 'Abdul', password: "password1", location: '')
 
 Topic.create(name: '#politics')
 Topic.create(name: '#culture')
