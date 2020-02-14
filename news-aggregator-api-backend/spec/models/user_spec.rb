@@ -19,7 +19,7 @@ describe 'User' do
   end
 
   it 'has a location' do
-    expect(@user.location).to eq("location")
+    expect(@user.location).to eq("home")
   end
 
   it 'has many links' do
