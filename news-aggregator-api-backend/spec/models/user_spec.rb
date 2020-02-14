@@ -3,7 +3,7 @@ require 'rails_helper'
 describe 'User' do
 
   before do
-    @user = User.create(username: "myUser", password: "badPassword", location: "home")
+    @user = User.create(username: "myUser", password_digest: "badPassword", location: "home")
     @topic1 = Topic.create(name: "myTopic")
     @topic2 = Topic.create(name: "myEndotopic")
     @link1 = Link.create(name: "some_news", url: "https://google.com", topic: @topic1, user: @user)
@@ -15,7 +15,7 @@ describe 'User' do
   end
 
   it 'has a password' do
-    expect(@user.password).to eq("badPassword")
+    expect(@user.password_digest).to eq("badPassword")
   end
 
   it 'has a location' do
@@ -27,6 +27,6 @@ describe 'User' do
   end
 
   it 'has many topics, through links' do
-    expect(@user.patients).to eq([@topic1, @topic2])
+    expect(@user.topics).to eq([@topic1, @topic2])
   end
 end
