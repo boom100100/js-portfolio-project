@@ -8,5 +8,5 @@ class User < ApplicationRecord
   has_secure_password
 
   has_many :links
-  has_many :topics, through :links
+  has_many :topics, through: :links
 end
