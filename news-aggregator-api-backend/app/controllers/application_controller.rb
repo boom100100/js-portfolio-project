@@ -1,3 +1,10 @@
+#require "./app/models/twitter_api"
+#require "twitter"
+
+class ApplicationController < ActionController::API
+
+end
+
 =begin
 require "./config/environment"
 require "./app/models/user"
@@ -78,6 +85,3 @@ class ApplicationController < Sinatra::Base
 
 end
 =end
-
-class ApplicationController < ActionController::API
-end
