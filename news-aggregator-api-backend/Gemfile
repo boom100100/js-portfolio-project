@@ -3,17 +3,17 @@ git_source(:github) { |repo| "https://github.com/#{repo}.git" }
 
 ruby '2.6.5'
 
-=begin #must figure out gems
-gem 'sinatra'
-gem 'activerecord', '<=5.1', :require => 'active_record'
-gem 'sinatra-activerecord'
-gem 'rake'
-
-=end
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.1'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
+gem 'news-api'
+gem 'twitter'
+gem 'sinatra'
+gem 'activerecord'
+gem 'sinatra-activerecord'
+gem 'rake'
+
 #use bcrypt for has_secure_password
 gem 'bcrypt'
 # Use Puma as the app server
@@ -35,7 +35,7 @@ gem 'puma', '~> 3.11'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
-# gem 'rack-cors'
+gem 'rack-cors'
 
 group :development do
 end
