@@ -10,7 +10,6 @@ function doFetch(url, fcn, trendName){
       return response.json();
     })
     .then(function(json){
-      //console.log(json);
       fcn(json, trendName);
   });
 }
@@ -46,7 +45,7 @@ class LinkCard{
 }
 
 function makeLinkCards(json, trendName){
-  console.log(json);
+  //console.log(json);
   if (Object.keys(json).length < 0){
     for (let story of json){
       let a = document.createElement('a');
