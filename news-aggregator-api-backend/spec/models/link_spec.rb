@@ -4,9 +4,9 @@ describe 'Link' do
 
   before do
     @topic = Topic.create(name: "myTopic")
-    @user = User.create(username: "myUser", password_digest: "badPassword", location: "home")
-
-    @link = Link.create(name: "some_news", url: "https://google.com", topic: @topic, user: @user)
+    #@user = User.create(username: "myUser", password_digest: "badPassword", location: "home")
+    #@link = Link.create(name: "some_news", url: "https://google.com", topic: @topic, user: @user)
+    @link = Link.create(name: "some_news", url: "https://google.com", topic: @topic)
 
   end
 
@@ -22,10 +22,9 @@ describe 'Link' do
     expect(@link.topic).to eq(@topic)
   end
 
+=begin
   it 'has many users' do
       expect(@link.user).to eq(@user)
     end
-
-
-
+=end
 end

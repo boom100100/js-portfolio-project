@@ -1,5 +1,6 @@
 require 'rails_helper'
 
+=begin
 describe 'User' do
 
   before do
@@ -30,3 +31,4 @@ describe 'User' do
     expect(@user.topics).to eq([@topic1, @topic2])
   end
 end
+=end
