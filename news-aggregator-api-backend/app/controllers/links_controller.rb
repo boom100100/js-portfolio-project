@@ -3,7 +3,7 @@ require 'news-api'
 class LinksController < ApplicationController
   def index
     #authenticate news
-    news = News.new("d552fa1abf434d97a9001b366f4d0c55")
+    news = News.new("")
 
     #get topics, date
     topics = Topic.all
