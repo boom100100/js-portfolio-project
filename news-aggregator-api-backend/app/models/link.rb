@@ -1,4 +1,4 @@
 class Link < ApplicationRecord
   belongs_to :topic
-  belongs_to :user
+  #belongs_to :user
 end
