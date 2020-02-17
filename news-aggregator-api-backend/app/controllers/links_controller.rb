@@ -24,14 +24,15 @@ class LinksController < ApplicationController
         #authenticate news
         articles = getNews(topic.name, date[0])
         #puts articles["response"]["results"]
+        if articles["response"]["results"].length > 0
+          articles["response"]["results"].each do |result|
 
-        articles["response"]["results"].each do |result|
+          #results = news.get_everything(q: "#{name}", from: "#{date[0]}", sortBy: "popularity")
+          #results.each do |result|
 
-        #results = news.get_everything(q: "#{name}", from: "#{date[0]}", sortBy: "popularity")
-        #results.each do |result|
-
-          #make link for each search result; assign topic
-          Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
+            #make link for each search result; assign topic
+            Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
+          end
         end
       end
 
