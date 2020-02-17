@@ -21,7 +21,7 @@ class TopicsController < ApplicationController
   def show
     topic = Topic.find_by(id: params[:id])
     if topic
-      render json: topic, only: ['name']
+      render json: topic, only: [:id, :name], include: [:links]
     else
       render plain: 'Topic not found.'
     end
