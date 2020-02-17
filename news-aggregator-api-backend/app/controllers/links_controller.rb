@@ -70,10 +70,10 @@ class LinksController < ApplicationController
 
   def getNews(topic, date)
     url = "https://content.guardianapis.com/search?q=#{topic.gsub(/[\s\W]/,'_')}&api-key="
-    #url = "https://content.guardianapis.com/search&keyword=#{topic.gsub(/[\s\W]/,'_')}?api-key=7d9a78bd-df7c-46cb-8317-ec287094e5fa"
+
     #url = "https://api-beta.civicfeed.com/news/search?q=#{topic.gsub(/[\s\W]/,'_')}&from=#{date[0]}&results=30?x-api-key=2E1osqNeA413TDVuOOjU06kXSjgBy5qxPKnbhMt2"
-    #url = "https://api.currentsapi.services/v1/search?keywords=#{topic.gsub(/[\s\W]/,'_')}&language=en&apiKey=CfQ_cXFgfCVeOLgwoPUAVEbX4-vdtrrrjp8oA-KqwCOf5OAH"
-    #url = "https://newsapi.org/v2/everything?q=#{topic.gsub(/[\s\W]/,'_').downcase}?domains=aljazeera.com,arstechnica.com,arynews.tv,apnews.com,afr.com,axios.com,bbc.co.uk,bloomberg.com,businessinsider.com,cbc.ca,cbsnews.com,cnbc.com,cnn.com,elmundo.es,engadget.com,fortune.com,fourfourtwo.com,medicalnewstoday.com,msnbc.com,mtv.com,nationalgeographic.com,nbcnews.com,news24.com,newscientist.com,newsweek.com,nymag.com,nextbigfuture.com,nfl.com,nhl.com,politico.com,recode.net,reuters.com,rte.ie,wsj.com,nytimes.com&from=#{date}&apiKey=a025658f693f40f99ccd792a8392f074"
+    #url = "https://api.currentsapi.services/v1/search?keywords=#{topic.gsub(/[\s\W]/,'_')}&language=en&apiKey="
+    #url = "https://newsapi.org/v2/everything?q=#{topic.gsub(/[\s\W]/,'_').downcase}?domains=aljazeera.com,arstechnica.com,arynews.tv,apnews.com,afr.com,axios.com,bbc.co.uk,bloomberg.com,businessinsider.com,cbc.ca,cbsnews.com,cnbc.com,cnn.com,elmundo.es,engadget.com,fortune.com,fourfourtwo.com,medicalnewstoday.com,msnbc.com,mtv.com,nationalgeographic.com,nbcnews.com,news24.com,newscientist.com,newsweek.com,nymag.com,nextbigfuture.com,nfl.com,nhl.com,politico.com,recode.net,reuters.com,rte.ie,wsj.com,nytimes.com&from=#{date}&apiKey="
     article_serialized = open(url).read
     articles = JSON.parse(article_serialized)
     articles
