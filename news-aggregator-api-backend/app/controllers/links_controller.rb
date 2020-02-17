@@ -1,4 +1,4 @@
-require 'news-api'
+#require 'news-api'
 require "open-uri"
 
 class LinksController < ApplicationController
@@ -25,11 +25,11 @@ class LinksController < ApplicationController
         articles = getNews(topic.name, date[0])
 
         articles["response"]["results"].each do |result|
-        #results = news.get_everything(q: "#{name}", from: "#{date[0]}", sortBy: "popularity")
 
+        #results = news.get_everything(q: "#{name}", from: "#{date[0]}", sortBy: "popularity")
         #results.each do |result|
 
-          #make link for each search result
+          #make link for each search result; assign topic
           Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
         end
       end
@@ -69,7 +69,7 @@ class LinksController < ApplicationController
   end
 
   def getNews(topic, date)
-    url = "https://content.guardianapis.com/search?keyword=#{topic.gsub(/[\s\W]/,'_')}&api-key="
+    url = "https://content.guardianapis.com/search?q=#{topic.gsub(/[\s\W]/,'_')}&api-key="
     #url = "https://content.guardianapis.com/search&keyword=#{topic.gsub(/[\s\W]/,'_')}?api-key=7d9a78bd-df7c-46cb-8317-ec287094e5fa"
     #url = "https://api-beta.civicfeed.com/news/search?q=#{topic.gsub(/[\s\W]/,'_')}&from=#{date[0]}&results=30?x-api-key=2E1osqNeA413TDVuOOjU06kXSjgBy5qxPKnbhMt2"
     #url = "https://api.currentsapi.services/v1/search?keywords=#{topic.gsub(/[\s\W]/,'_')}&language=en&apiKey=CfQ_cXFgfCVeOLgwoPUAVEbX4-vdtrrrjp8oA-KqwCOf5OAH"
