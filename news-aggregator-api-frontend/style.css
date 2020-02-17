@@ -5,6 +5,7 @@ body {
 }
 
 div {
+  color: #cccccc;
   display: inline-block;
   margin: 10px;
 }
@@ -18,7 +19,7 @@ div {
 }
 
 .card {
-  background-color: #cccccc;
+  background-color: #5f6769;
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 5px;
@@ -53,9 +54,9 @@ h3{
 }
 
 a {
-  color: #dec2a4;
+  color: #dfcdc3;
 }
 
 a:visited {
-  color: #f3e1d7;
+  color: #cf7c7c;
 }
