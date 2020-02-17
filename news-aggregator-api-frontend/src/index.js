@@ -51,6 +51,7 @@ function makeTrendCards(json) {
     div.appendChild(document.createElement('br'));
     document.getElementById('main').appendChild(div);
     button.onclick = function(){
+      div.style.display = "block";
       searchTrends(trend['name']);
     };
 
