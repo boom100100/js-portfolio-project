@@ -23,6 +23,7 @@ class LinksController < ApplicationController
 
         #authenticate news
         articles = getNews(topic.name, date[0])
+        #puts articles["response"]["results"]
 
         articles["response"]["results"].each do |result|
 
