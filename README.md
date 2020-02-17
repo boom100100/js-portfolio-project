@@ -2,6 +2,8 @@
 
 The purpose of this app is to aggregate news stories from reliable sources. The news stories will be aggregated in real time, and their content will be based on topics that are trending on Twitter.
 
+*Note: due to limited API calls to dependencies, scope of project has been limited to presenting a single reliable news source during testing.*
+
 The main page shows buttons that represent trending topics. When a user clicks a button, the page queries the backend for a real-time search of related news. If there are results, links to related stories appear under the topic.
 
 Dependencies:
