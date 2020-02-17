@@ -39,7 +39,9 @@ function makeTrendCards(json) {
 
 
     div.id = trend['name'] + "-div";
+    div.className = "card";
     button.id = trend['name'] + "-button";
+    button.className = "button";
     button.appendChild(document.createTextNode(trend['name']));
 
     div.appendChild(button);
