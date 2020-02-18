@@ -1,20 +1,14 @@
-#require 'news-api'
 require "open-uri"
 
 class LinksController < ApplicationController
-  #@@time;
   def index
-
-
     #get topics, date
     topics = Topic.all
     date = format
 
 
-    #if links updated within the hour: if (@@time - date[1]).abs != 0
     #if there are trending topics
     if topics
-      #@@time = format[1]
       destroy
 
       #search each topic
@@ -23,18 +17,14 @@ class LinksController < ApplicationController
 
         #authenticate news
         articles = getNews(topic.name, date[0])
-        #puts articles["response"]["results"]
         if articles["response"]["results"].length > 0
           articles["response"]["results"].each do |result|
 
-          #results = news.get_everything(q: "#{name}", from: "#{date[0]}", sortBy: "popularity")
-          #results.each do |result|
-
-            #make link for each search result; assign topic
-            Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
-          end
+          #make link for each search result; assign topic
+          Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
         end
       end
+    end
 
       render json: Link.all, only: [:id, :name, :url], include: [:topic]
     else
