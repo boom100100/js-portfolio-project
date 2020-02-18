@@ -4,7 +4,7 @@ The purpose of this app is to aggregate news stories from reliable sources. The 
 
 *Note: due to limited API calls to dependencies, scope of project has been limited to presenting a single reliable news source during testing.*
 
-The main page shows buttons that represent trending topics. When a user clicks a button, the page queries the backend for a real-time search of related news. If there are results, links to related stories appear under the topic.
+The index page shows buttons that represent trending topics. When a user clicks a button, the page queries the backend for a real-time search of related news. If there are results, links to related stories appear under the topic.
 
 Dependencies:
 CORS
@@ -19,4 +19,4 @@ Add api key for The Guardian API to news-aggregator-api-backend/app/controllers/
 
 Usage:
 Endpoints are /links, /links/:id, /topics, and /topics/:id.
-For GUI, open news-aggregator-api-frontend/index.html in a browser to use once you've configured the app.
+For GUI, open news-aggregator-api-frontend/index.html in a browser after configuring the app.
