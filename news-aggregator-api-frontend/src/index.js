@@ -22,7 +22,7 @@ function getTrends(url, fcn) {
 
 
 function makeTrendCards(json) {
-  //console.log(json);
+  
   for (let trend of json){
     //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
     new ElementClass('main', 'div', trend['name'] + "-div", 'card', null, null, null, null, null, null);
@@ -84,7 +84,7 @@ function makeLinkCards(json, trendName){
 }
 
 class ElementClass {
-  //static allElements = {};
+
   constructor(parent, tag, id, className, onClick, display, innerHTML, href, title, target){
     let me = document.createElement(tag);
     me.id = id;
@@ -97,7 +97,7 @@ class ElementClass {
     me.target = target;
 
     ElementClass.getElement(parent).appendChild(me);
-    //ElementClass.allElements[id] = this;
+
   }
   static setDisplay(id){
     let element = ElementClass.getElement(id);
