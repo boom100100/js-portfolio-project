@@ -1,5 +1,6 @@
-//Initiates fetches and frontend rendering.
 let jsonData;
+
+//Initiates fetches and frontend rendering.
 function doAll(){
   getTrends('http://localhost:3000/topics/', makeTrendCards);
 }
@@ -23,45 +24,29 @@ function getTrends(url, fcn) {
 function makeTrendCards(json) {
   //console.log(json);
   for (let trend of json){
-    let div = document.createElement("div");
-    let button = document.createElement("button");
+    //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
+    new ElementClass('main', 'div', trend['name'] + "-div", 'card', null, null, null, null, null, null);
 
-    let noResults = document.createElement("div");
-    noResults.innerHTML = "This trend returned 0 results.";
-    let searching = document.createElement("div");
-    searching.innerHTML = "Searching...";
-    noResults.id = trend['name'] + "-no-results";
-    searching.id = trend['name'] + "-searching";
-    noResults.class = "no-results";
-    searching.class = "searching";
-    noResults.style.display = "none";
-    searching.style.display = "none";
-
-
-    div.id = trend['name'] + "-div";
-    div.className = "card";
-    button.id = trend['name'] + "-button";
-    button.className = "button";
-    button.appendChild(document.createTextNode(trend['name']));
-
-    div.appendChild(button);
-    div.appendChild(noResults);
-    div.appendChild(searching);
-
-    div.appendChild(document.createElement('br'));
-    document.getElementById('main').appendChild(div);
-    button.onclick = function(){
-      div.style.display = "block";
+    const buttonOnClick = function(){
       searchTrends(trend['name']);
     };
+
+    new ElementClass(trend['name'] + "-div", 'button', trend['name'] + "-button", 'button', buttonOnClick, null, trend['name'], null, null, null);
+
+    new ElementClass(trend['name'] + "-div", 'div', trend['name'] + "-no-results", 'no-results', null, 'none', 'This trend returned 0 results.', null, null, null);
+    new ElementClass(trend['name'] + "-div", 'div', trend['name'] + "-searching", 'searching', null, 'none', 'Searching...', null, null, null);
+
+    new ElementClass(trend['name'] + "-div", 'br', '', '', null, null, null, null, null, null);
 
   }
 }
 
 function searchTrends(trendName){
-  document.getElementById(trendName + "-no-results").style.display = "none";
-  document.getElementById(trendName + "-searching").style.display = "block";
+  ElementClass.resizeElement(trendName + '-div');
+  ElementClass.removeLinks(trendName + '-div');
+  ElementClass.setDisplay(trendName + "-searching");
   console.log("Searching for: " + trendName);
+
   doFetch('http://localhost:3000/links/', makeLinkCards, trendName);
 }
 
@@ -71,37 +56,72 @@ function makeLinkCards(json, trendName){
   jsonData = json;
   console.log("Link set: " + trendName);
   console.log(json)
-  //if (json.count < 0){
+
   let results = 0;
+
   for (let story of json){
-    //console.log("story['topic']['name'] === trendName?" + (story['topic']['name'] === trendName))
+
 
     if (story['topic']['name'] === trendName) {
       results++;
       console.log(story['topic']['name'] + ", " + story['name'])
-      let a = document.createElement('a');
+      new ElementClass(trendName + "-div",'br','','',null,null,null, null, null, null);
 
-      //which of these two?
-      //a.appendChild(document.createTextNode(story.name));
-      a.target = "_blank";
-      a.text = story.name;
-
-      a.title = story.name;
-      a.href = story.url;
-
-      document.getElementById(trendName + "-div").appendChild(document.createElement('br'));
-      document.getElementById(trendName + "-div").appendChild(a);
+      //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
+      new ElementClass(trendName + "-div",'a','','',null,null,story.name, story.url, story.name, '_blank');
 
     }
   }
-  document.getElementById(trendName + "-searching").style.display = "none";
+  ElementClass.setDisplay(trendName + "-searching");
+
   if (results === 0){
     //alert: no results.
-    document.getElementById(trendName + "-no-results").style.display = "block";
+    ElementClass.setDisplay(trendName + "-no-results");
+    setTimeout(function(){
+      ElementClass.setDisplay(trendName + "-no-results");
+    }, 10000);
   }
-  //} else {
-    //console.log('No json data.')
-  //}
+}
+
+class ElementClass {
+  //static allElements = {};
+  constructor(parent, tag, id, className, onClick, display, innerHTML, href, title, target){
+    let me = document.createElement(tag);
+    me.id = id;
+    me.className = className;
+    me.onclick = onClick;
+    me.style.display = display;
+    me.innerHTML = innerHTML;
+    me.href = href;
+    me.title = title;
+    me.target = target;
+
+    ElementClass.getElement(parent).appendChild(me);
+    //ElementClass.allElements[id] = this;
+  }
+  static setDisplay(id){
+    let element = ElementClass.getElement(id);
+    element.style.display == "none" ? element.style.display = "block" : element.style.display = "none";
+  }
+  static getElement(id){
+    return document.getElementById(id);
+  }
+
+  static resizeElement(id){
+    ElementClass.getElement(id).style.display = 'block';
+  }
+
+  static removeLinks(id){
+    let toRemove = [...ElementClass.getElement(id).getElementsByTagName('br'),
+     ...ElementClass.getElement(id).getElementsByTagName('a')];
+
+    if (toRemove.length > 0){
+      for (let i = 0; i < toRemove.length; i++){
+        toRemove[i].parentNode.removeChild(toRemove[i]);
+      }
+    }
+  }
+
 }
 
 document.addEventListener('DOMContentLoaded', function() {
