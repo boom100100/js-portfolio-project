@@ -3,6 +3,16 @@ let jsonData;
 //Initiates fetches and frontend rendering.
 function doAll(){
   getTrends('http://localhost:3000/topics/', makeTrendCards);
+  setUpRefreshTrends();
+}
+
+function setUpRefreshTrends(){
+  const refreshTrends = function(){
+    ElementClass.getElement('main').innerHTML = '';
+    getTrends('http://localhost:3000/topics/refresh', makeTrendCards);
+  }
+                    //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
+  new ElementClass('top-bar', 'button', 'refresh-button', 'button', refreshTrends, null, 'Refresh Trends', null, null, null);
 }
 
 //Fetcher. Called twice: once without trendName, once with it.
@@ -22,7 +32,7 @@ function getTrends(url, fcn) {
 
 
 function makeTrendCards(json) {
-  
+
   for (let trend of json){
     //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
     new ElementClass('main', 'div', trend['name'] + "-div", 'card', null, null, null, null, null, null);
