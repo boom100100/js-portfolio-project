@@ -2,6 +2,7 @@ class TopicsController < ApplicationController
 
   #gets and shows full group of trending topics.
   #data taken from twitter api.
+  #user must initiate update - calls refresh instead of index
   def index
     @topics = Topic.all
     @topics ? render( json: @topics, only: ['id','name']) : render( 'Collecting trending topics failed.')
@@ -26,14 +27,14 @@ class TopicsController < ApplicationController
   end
 
   def destroy
-    Topic.delete_all
+    Topic.destroy_all
   end
 
   def refresh
     #authenticate
     client = authenticate
     topics = client.trends().to_h
-    
+
     if topics.as_json['trends'].length > 0
 
       destroy #gets rid of previous topics
