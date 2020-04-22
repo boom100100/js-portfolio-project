@@ -230,7 +230,7 @@ DEPENDENCIES
   pry
   puma (~> 3.12)
   rack-cors
-  rails (~> 5.2.4, >= 5.2.4.1)
+  rails (~> 5.2.4, >= 5.2.4.2)
   rake
   rspec-rails (~> 3.7)
   sinatra
