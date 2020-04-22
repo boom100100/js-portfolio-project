@@ -1,6 +1,8 @@
 require "open-uri"
 
 class LinksController < ApplicationController
+  #shows all links and corresponding topics
+
   def index
     #get topics, date
     topics = Topic.all
@@ -9,6 +11,7 @@ class LinksController < ApplicationController
 
     #if there are trending topics
     if topics
+      #delete all links
       destroy
 
       #search each topic
@@ -46,7 +49,7 @@ class LinksController < ApplicationController
   end
 
   def destroy
-    Link.delete_all
+    Link.destroy_all
   end
 
   private
