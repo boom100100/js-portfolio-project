@@ -61,7 +61,7 @@ class LinksController < ApplicationController
   end
 
   def getNews(topic, date)
-    url = "https://content.guardianapis.com/search?q=#{topic.gsub(/[\s\W]/,'_')}&api-key="
+    url = "https://content.guardianapis.com/search?q=#{topic.gsub(/[\s\W]/,'_')}&api-key=#{Rails.application.credentials.guardian[:api_key]}"
 
     #url = "https://api-beta.civicfeed.com/news/search?q=#{topic.gsub(/[\s\W]/,'_')}&from=#{date[0]}&results=30?x-api-key="
     #url = "https://api.currentsapi.services/v1/search?keywords=#{topic.gsub(/[\s\W]/,'_')}&language=en&apiKey="

@@ -42,8 +42,8 @@ class TopicsController < ApplicationController
   private
   def authenticate
     Twitter::REST::Client.new do |config|
-      config.consumer_key        = ""
-      config.consumer_secret     = ""
+      config.consumer_key        = Rails.application.credentials.twitter[:api_key]
+      config.consumer_secret     = Rails.application.credentials.twitter[:api_secret_key]
     end
   end
 
