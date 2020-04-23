@@ -5,7 +5,7 @@ class TopicsController < ApplicationController
   #user must initiate update - calls refresh instead of index
   def index
     @topics = Topic.all
-    @topics ? render( json: @topics, only: ['id','name']) : render( 'Collecting trending topics failed.')
+    @topics ? render( json: @topics, only: ['id','name']) : render( 'Querying trending topics failed.')
   end
 
   #shows a single topic and its associated links.
