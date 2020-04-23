@@ -4,6 +4,14 @@ class LinksController < ApplicationController
   #shows all links and corresponding topics
 
   def index
+    @links = Link.all
+    #may not have topics if topics refreshed.
+    if @links
+      render json: @links, only: [:id, :name, :url], include: [:topic]
+    else
+      render plain: 'Could not find links.'
+    end
+=begin
     #get topics, date
     topics = Topic.all
     date = format
@@ -33,6 +41,7 @@ class LinksController < ApplicationController
     else
       render ''
     end
+=end
   end
 
   def show
@@ -45,14 +54,51 @@ class LinksController < ApplicationController
   end
 
   def create
-
+    @link = Link.create(link_params)
   end
 
   def destroy
     Link.destroy_all
   end
 
+  #
+  def refresh
+    #get topics, date
+    topics = Topic.all
+    date = format
+
+    #if there are trending topics
+    if topics
+      #delete all links
+      destroy
+
+      #search each topic
+      topics.each do |topic|
+        name = topic.name.gsub(/[\W\s]/, "")
+
+        #authenticate news
+        articles = getNews(topic.name, date[0])
+        if articles["response"]["results"].length > 0
+          articles["response"]["results"].each do |result|
+
+          #make link for each search result; assign topic
+          Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
+        end
+      end
+    end
+
+      render json: Link.all, only: [:id, :name, :url], include: [:topic]
+    else
+      render plain: 'Could not find links.'
+    end
+  end
+
   private
+
+  def link_params
+    params.require(:link).permit(:name, :url, :topic)
+  end
+
   def format
     time = Time.now
     year = time.strftime("%Y")
