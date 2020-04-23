@@ -30,21 +30,29 @@ class TopicsController < ApplicationController
     Topic.destroy_all
   end
 
+  #empties, repopulates db
+  #collectively, any given user can refresh topic entries no more frequently than every 15 minutes
+  #timestamp of data in database, not time of current user's last call, will determine if refresh can happen
   def refresh
-    #authenticate
-    client = authenticate
-    topics = client.trends().to_h
+    do_refresh = (Topic.all.first.created_at.since(60*15) <= DateTime.now)
+    if do_refresh
+      #authenticate
+      client = authenticate
+      topics = client.trends().to_h
 
-    if topics.as_json['trends'].length > 0
+      if topics.as_json['trends'].length > 0
 
-      destroy #gets rid of previous topics
-      topics.as_json['trends'].each do |topic|
-        create(topic['name']) #creates topic objects
+        destroy #gets rid of previous topics
+        topics.as_json['trends'].each do |topic|
+          create(topic['name']) #creates topic objects
+        end
+        render json: Topic.all, only: ['id','name']
+
+      else
+        render 'Collecting trending topics failed.'
       end
-      render json: Topic.all, only: ['id','name']
-
     else
-      render 'Collecting trending topics failed.'
+      render json: Topic.all, only: ['id','name']
     end
   end
 
