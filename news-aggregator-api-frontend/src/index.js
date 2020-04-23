@@ -2,7 +2,7 @@ let jsonData;
 
 //Initiates fetches and frontend rendering.
 function doAll(){
-  getTrends('http://localhost:3000/topics/', makeTrendCards);
+  getTrends('http://localhost:3000/topics', makeTrendCards);
   setUpRefreshTrends();
 }
 
@@ -23,6 +23,29 @@ function doFetch(url, fcn, trendName){
     })
     .then(function(json){
       fcn(json, trendName);
+  });
+}
+
+//post fetcher
+//has backend query third-party api for news stories search
+function doPostFetch(maker, trendName){
+  configurationObject = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      trend_name: trendName
+    })
+  };
+  return fetch('http://localhost:3000/links/refresh', configurationObject)
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json){
+      //console.log(json);
+      maker(json, trendName);
   });
 }
 
@@ -56,8 +79,10 @@ function searchTrends(trendName){
   ElementClass.removeLinks(trendName + '-div');
   ElementClass.setDisplay(trendName + "-searching");
   console.log("Searching for: " + trendName);
-
-  doFetch('http://localhost:3000/links/', makeLinkCards, trendName);
+  //##########
+  //post to my api to call third-party api
+  doPostFetch(makeLinkCards, trendName);
+  //doFetch('http://localhost:3000/links', makeLinkCards, trendName);
 }
 
 
@@ -71,15 +96,16 @@ function makeLinkCards(json, trendName){
 
   for (let story of json){
 
+    if (story['topic']){
+      if (story['topic']['name'] === trendName) {
+        results++;
+        console.log(story['topic']['name'] + ", " + story['name'])
+        new ElementClass(trendName + "-div",'br','','',null,null,null, null, null, null);
 
-    if (story['topic']['name'] === trendName) {
-      results++;
-      console.log(story['topic']['name'] + ", " + story['name'])
-      new ElementClass(trendName + "-div",'br','','',null,null,null, null, null, null);
+        //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
+        new ElementClass(trendName + "-div",'a','','',null,null,story.name, story.url, story.name, '_blank');
 
-      //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
-      new ElementClass(trendName + "-div",'a','','',null,null,story.name, story.url, story.name, '_blank');
-
+      }
     }
   }
   ElementClass.setDisplay(trendName + "-searching");
