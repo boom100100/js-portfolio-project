@@ -95,11 +95,11 @@ class LinksController < ApplicationController
   end
 
   def getNews(topic, date)
-    url = "https://content.guardianapis.com/search?q=#{topic.gsub(/[\s\W]/,'+')}&api-key=#{Rails.application.credentials.guardian[:api_key]}"
+    topic = topic.gsub(/[\s\W]/,'+')
+    topic = topic.gsub(/[A-Z]/,'+\0')
+    #puts '#################################' + topic + '#################################'
+    url = "https://content.guardianapis.com/search?q=#{topic}&api-key=#{Rails.application.credentials.guardian[:api_key]}"
 
-    #url = "https://api-beta.civicfeed.com/news/search?q=#{topic.gsub(/[\s\W]/,'_')}&from=#{date[0]}&results=30?x-api-key="
-    #url = "https://api.currentsapi.services/v1/search?keywords=#{topic.gsub(/[\s\W]/,'_')}&language=en&apiKey="
-    #url = "https://newsapi.org/v2/everything?q=#{topic.gsub(/[\s\W]/,'_').downcase}?domains=aljazeera.com,arstechnica.com,arynews.tv,apnews.com,afr.com,axios.com,bbc.co.uk,bloomberg.com,businessinsider.com,cbc.ca,cbsnews.com,cnbc.com,cnn.com,elmundo.es,engadget.com,fortune.com,fourfourtwo.com,medicalnewstoday.com,msnbc.com,mtv.com,nationalgeographic.com,nbcnews.com,news24.com,newscientist.com,newsweek.com,nymag.com,nextbigfuture.com,nfl.com,nhl.com,politico.com,recode.net,reuters.com,rte.ie,wsj.com,nytimes.com&from=#{date}&apiKey="
     article_serialized = open(url).read
     articles = JSON.parse(article_serialized)
     articles
