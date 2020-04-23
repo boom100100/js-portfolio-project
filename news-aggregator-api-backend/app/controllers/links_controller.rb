@@ -1,51 +1,24 @@
 require "open-uri"
 
 class LinksController < ApplicationController
-  #shows all links and corresponding topics
 
+  #shows all links and corresponding topics
   def index
-    @links = Link.all
+    if params[:topic_id]
+      @links = Topic.find_by(id: params[:topic_id]).links
+    else
+      @links = Link.all
+    end
     #may not have topics if topics refreshed.
     if @links
       render json: @links, only: [:id, :name, :url], include: [:topic]
     else
       render plain: 'Could not find links.'
     end
-=begin
-    #get topics, date
-    topics = Topic.all
-    date = format
-
-
-    #if there are trending topics
-    if topics
-      #delete all links
-      destroy
-
-      #search each topic
-      topics.each do |topic|
-        name = topic.name.gsub(/[\W\s]/, "")
-
-        #authenticate news
-        articles = getNews(topic.name, date[0])
-        if articles["response"]["results"].length > 0
-          articles["response"]["results"].each do |result|
-
-          #make link for each search result; assign topic
-          Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
-        end
-      end
-    end
-
-      render json: Link.all, only: [:id, :name, :url], include: [:topic]
-    else
-      render ''
-    end
-=end
   end
 
   def show
-    link = Link.find_by(:id => params[:id])
+    link = Link.find_by(id: params[:id])
     render json: link, only: [:id, :name, :url], include: [:topic]
   end
 
@@ -58,38 +31,50 @@ class LinksController < ApplicationController
   end
 
   def destroy
-    Link.destroy_all
+    Link.destroy
   end
 
   #
   def refresh
-    #get topics, date
-    topics = Topic.all
-    date = format
+    #puts '#############################' + params[:trend_name] + '#############################'
+    topic = Topic.find_by(name: params[:trend_name])
 
-    #if there are trending topics
-    if topics
-      #delete all links
-      destroy
+    if topic
+      #Link.all.destroy_all
 
-      #search each topic
-      topics.each do |topic|
-        name = topic.name.gsub(/[\W\s]/, "")
+      #refresh links if no refresh occurred in last 15 minutes, or if no links
+      do_refresh = nil
+      if topic.links.length > 0
+        do_refresh = (topic.links[0].created_at.since(60*15) <= DateTime.now)
+      else
+        do_refresh = true
+      end
 
+      if do_refresh
+
+        date = format
+
+        #search topic
         #authenticate news
         articles = getNews(topic.name, date[0])
         if articles["response"]["results"].length > 0
-          articles["response"]["results"].each do |result|
 
-          #make link for each search result; assign topic
-          Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic).save
+          #delete all links for this topic
+          topic.links.destroy_all if topic.links
+
+          articles["response"]["results"].each do |result|
+            #make link for each search result; assign topic
+            Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic)
+          end
         end
       end
-    end
 
-      render json: Link.all, only: [:id, :name, :url], include: [:topic]
+      #redirect with parameter
+      #filters links to a specific topic's links
+      redirect_to links_path, topic_id: topic.id#render json: @links, only: [:id, :name, :url], include: [:topic]
+
     else
-      render plain: 'Could not find links.'
+      render plain: 'Could not find links for posted topic.'
     end
   end
 
@@ -110,7 +95,7 @@ class LinksController < ApplicationController
   end
 
   def getNews(topic, date)
-    url = "https://content.guardianapis.com/search?q=#{topic.gsub(/[\s\W]/,'_')}&api-key=#{Rails.application.credentials.guardian[:api_key]}"
+    url = "https://content.guardianapis.com/search?q=#{topic.gsub(/[\s\W]/,'+')}&api-key=#{Rails.application.credentials.guardian[:api_key]}"
 
     #url = "https://api-beta.civicfeed.com/news/search?q=#{topic.gsub(/[\s\W]/,'_')}&from=#{date[0]}&results=30?x-api-key="
     #url = "https://api.currentsapi.services/v1/search?keywords=#{topic.gsub(/[\s\W]/,'_')}&language=en&apiKey="
