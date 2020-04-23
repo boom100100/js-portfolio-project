@@ -96,7 +96,7 @@ class LinksController < ApplicationController
 
   def getNews(topic, date)
     topic = topic.gsub(/[\s\W]/,'+')
-    topic = topic.gsub(/[A-Z]/,'+\0')
+    topic = topic.gsub(/[A-Z]{1,}/,'+\0')
     #puts '#################################' + topic + '#################################'
     url = "https://content.guardianapis.com/search?q=#{topic}&api-key=#{Rails.application.credentials.guardian[:api_key]}"
 
