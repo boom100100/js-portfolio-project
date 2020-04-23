@@ -79,10 +79,10 @@ function searchTrends(trendName){
   ElementClass.removeLinks(trendName + '-div');
   ElementClass.setDisplay(trendName + "-searching");
   console.log("Searching for: " + trendName);
-  //##########
+
   //post to my api to call third-party api
   doPostFetch(makeLinkCards, trendName);
-  //doFetch('http://localhost:3000/links', makeLinkCards, trendName);
+
 }
 
 
