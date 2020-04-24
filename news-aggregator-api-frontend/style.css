@@ -1,7 +1,7 @@
 
 body {
   margin: 0;
-  background-color: #3c4245; /*# 3c4245, 5f6769, 719192, dfcdc3*/
+  background-color: #3c4245; /*# 3c4245, 535a5c, 719192, dfcdc3*/
 }
 
 div {
@@ -11,7 +11,7 @@ div {
 }
 
 .top-bar {
-  background-color: #5f6769;
+  background-color: #535a5c;
   margin: 0;
   padding: 10px;
   display: block;
@@ -19,24 +19,24 @@ div {
 }
 
 .card {
-  background-color: #5f6769;
+  background-color: #535a5c;
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 5px;
 }
 
 h1 {
-  color: #cccccc;
+  color: #ffe4bf;
 
 }
 
 h2{
-  color: #cccccc;
+  color: #ffe4bf;
 
 }
 
 h3{
-  color: #dfcdc3;
+  color: #fad096;
 
 }
 
@@ -53,8 +53,19 @@ h3{
   margin: 10px 10px 10px 0;
 }
 
+
 a {
-  color: #dfcdc3;
+
+  color: #fad096;
+  font-size: 16px;
+  display: block;
+  padding: 0 20px 20px 20px;
+  border-bottom: 1px solid #3c4245;
+  text-decoration: none;
+}
+
+a:after {
+    content: ' \21FE';
 }
 
 a:visited {
