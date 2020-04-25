@@ -4,6 +4,7 @@ let jsonData;
 function doAll(){
   getTrends('http://localhost:3000/topics', makeTrendCards);
   setUpRefreshTrends();
+  showSocialShare();
 }
 
 function setUpRefreshTrends(){
@@ -13,6 +14,14 @@ function setUpRefreshTrends(){
   }
                     //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
   new ElementClass('top-bar', 'button', 'refresh-button', 'button', refreshTrends, null, 'Refresh Trends', null, null, null);
+}
+
+function showSocialShare(){
+  //button for sharing on email and twitter
+  //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
+  new ElementClass('top-bar', 'a', 'share-link', 'fa fa-twitter share-link', null, null, '', 'https://twitter.com/intent/tweet?text=Find%20reliable%20news%20based%20on%20trending%20topics%20at%20' + window.location.href, 'Share site on Twitter.', '_blank');
+  new ElementClass('top-bar', 'a', 'share-link', 'fa fa-envelope-o share-link', null, null, '', 'mailto:?subject=A%20source%20for%20reliable%20news%20based%20on%20trending%20topics' + '&body=Find%20reliable%20news%20based%20on%20trending%20topics%20at%20' + window.location.href, 'Share site via email.', '_blank');
+
 }
 
 //Fetcher. Called twice: once without trendName, once with it.
@@ -103,7 +112,7 @@ function makeLinkCards(json, trendName){
         new ElementClass(trendName + "-div",'br','','',null,null,null, null, null, null);
 
         //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
-        new ElementClass(trendName + "-div",'a','','',null,null,story.name, story.url, story.name, '_blank');
+        new ElementClass(trendName + "-div",'a','','a-trend',null,null,story.name, story.url, story.name, '_blank');
 
       }
     }

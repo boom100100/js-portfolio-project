@@ -56,18 +56,30 @@ h3{
 
 a {
 
+
+  text-decoration: none;
   color: #fad096;
-  font-size: 16px;
+}
+
+a.share-link {
+  margin: 20px;
+
+  float: right;
+  font-size: 32px;
+}
+
+a.a-trend {
   display: block;
   padding: 0 20px 20px 20px;
   border-bottom: 1px solid #3c4245;
-  text-decoration: none;
+  font-size: 16px;
+  color: #fad096;
 }
 
-a:after {
-    content: ' \21FE';
+a.a-trend:after {
+  content: ' \21FE';
 }
 
-a:visited {
+a.a-trend:visited {
   color: #cf7c7c;
 }
