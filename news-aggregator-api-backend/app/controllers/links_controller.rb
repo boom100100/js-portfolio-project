@@ -46,7 +46,7 @@ class LinksController < ApplicationController
       #refresh links if no refresh occurred in last 15 minutes, or if no links
       do_refresh = nil
       if topic.links.length > 0
-        do_refresh = true#(topic.links[0].created_at.since(60*15) <= DateTime.now)
+        do_refresh = (topic.links[0].created_at.since(60*15) <= DateTime.now)
       else
         do_refresh = true
       end
