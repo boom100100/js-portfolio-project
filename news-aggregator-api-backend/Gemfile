@@ -7,7 +7,7 @@ ruby '2.6.5'
 gem 'rails', '~> 5.2.4', '>= 5.2.4.2'
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
-#gem 'news-api'
+gem 'news-api'
 gem 'twitter'
 gem 'sinatra'
 gem 'activerecord'
