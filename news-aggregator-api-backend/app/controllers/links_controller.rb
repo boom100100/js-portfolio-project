@@ -34,7 +34,8 @@ class LinksController < ApplicationController
     Link.destroy
   end
 
-  #
+  #called when spa user clicks trend button
+  #only refreshes in 15-minute intervals
   def refresh
     #puts '#############################' + params[:trend_name] + '#############################'
     topic = Topic.find_by(name: params[:trend_name])
@@ -45,7 +46,7 @@ class LinksController < ApplicationController
       #refresh links if no refresh occurred in last 15 minutes, or if no links
       do_refresh = nil
       if topic.links.length > 0
-        do_refresh = (topic.links[0].created_at.since(60*15) <= DateTime.now)
+        do_refresh = true#(topic.links[0].created_at.since(60*15) <= DateTime.now)
       else
         do_refresh = true
       end
@@ -57,15 +58,16 @@ class LinksController < ApplicationController
         #search topic
         #authenticate news
         articles = getNews(topic.name, date[0])
-        if articles["response"]["results"].length > 0
+        #puts '############################' + articles.to_s + '############################'
+        if articles && articles.size > 0
 
           #delete all links for this topic
           topic.links.destroy_all if topic.links
-
-          articles["response"]["results"].each do |result|
+          articles.each do |result|
             #make link for each search result; assign topic
-            Link.create(name: result['webTitle'], url: result['webUrl'], topic: topic)
+            Link.create(name: result.title, url: result.url, topic: topic)
           end
+
         end
       end
 
@@ -90,7 +92,7 @@ class LinksController < ApplicationController
     month = time.strftime("%m")
     day = time.day
     hour = time.hour
-    formatted_strings = ["#{year}-#{month}-#{day}", "#{hour}"]#{hour}"] #&to=#{year}-#{month}-#{day}", "#{hour}"]
+    formatted_strings = ["#{month}-#{day}-#{year}", "#{hour}"]#{hour}"] #&to=#{year}-#{month}-#{day}", "#{hour}"]
     formatted_strings
   end
 
@@ -98,10 +100,12 @@ class LinksController < ApplicationController
     topic = topic.gsub(/[\s\W]/,'+')
     topic = topic.gsub(/[A-Z]{1,}/,'+\0')
     #puts '#################################' + topic + '#################################'
-    url = "https://content.guardianapis.com/search?q=#{topic}&api-key=#{Rails.application.credentials.guardian[:api_key]}"
-
-    article_serialized = open(url).read
-    articles = JSON.parse(article_serialized)
-    articles
+    newsapi = News.new(Rails.application.credentials.news_api[:api_key])
+    all_articles = newsapi.get_everything(q: topic,sources: 'abc-news,bbc-news,espn,fortune,medical-news-today,national-geographic,politico,reuters,techcrunch,usa-today',from: date,language: 'en')
+    #puts all_articles
+    #article_serialized = open(url).read
+    #articles = JSON.parse(all_articles.to_s)
+    all_articles#articles
   end
+
 end
