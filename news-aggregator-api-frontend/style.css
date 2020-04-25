@@ -1,7 +1,11 @@
 
 body {
+  width: 100%;
+  max-width: 800px;
+  font-family: Arial, Helvetica, sans-serif;
   margin: 0;
   background-color: #3c4245; /*# 3c4245, 535a5c, 719192, dfcdc3*/
+  margin: auto;
 }
 
 div {
@@ -11,8 +15,8 @@ div {
 }
 
 .top-bar {
-  background-color: #535a5c;
-  margin: 0;
+  background-color: #3c4245;
+  margin: 0 20px 0 20px;
   padding: 10px;
   display: block;
 
@@ -66,6 +70,10 @@ a.share-link {
 
   float: right;
   font-size: 32px;
+}
+
+#refresh-button {
+  float: right;
 }
 
 a.a-trend {
