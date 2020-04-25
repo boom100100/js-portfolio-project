@@ -87,7 +87,7 @@ class LinksController < ApplicationController
   end
 
   def format
-    time = Time.now
+    time = Time.now - 3.days
     year = time.strftime("%Y")
     month = time.strftime("%m")
     day = time.day
