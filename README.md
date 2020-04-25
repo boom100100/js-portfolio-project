@@ -2,14 +2,12 @@
 
 The purpose of this app is to aggregate news stories from reliable sources. The news stories will be aggregated in real time, and their content will be based on topics that are trending on Twitter.
 
-*Note: due to limited API calls to dependencies, scope of project has been limited to presenting a single reliable news source during testing.*
-
 The index page shows buttons that represent trending topics. When a user clicks a button, the page queries the backend for a real-time search of related news. If there are results, links to related stories appear under the topic.
 
 Dependencies:
 CORS
 Twitter API
-The Guardian API
+News API
 
 Config:
 Add CORS support.
@@ -18,5 +16,6 @@ Add api key and secret for Twitter API to news-aggregator-api-backend/app/contro
 Add api key for The Guardian API to news-aggregator-api-backend/app/controllers/links_controller.rb#getNews.
 
 Usage:
+Run rails server.
 Endpoints are /links, /links/:id, /topics, and /topics/:id.
-For GUI, open news-aggregator-api-frontend/index.html in a browser after configuring the app.
+For GUI, open news-aggregator-api-frontend/index.html in a browser after configuring the app. Note that this also requires the rails server to run.
