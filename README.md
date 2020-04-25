@@ -12,8 +12,8 @@ News API
 Config:
 Add CORS support.
 Run bundle install for required gems.
-Add api key and secret for Twitter API to news-aggregator-api-backend/app/controllers/topics_controller.rb#authenticate.
-Add api key for The Guardian API to news-aggregator-api-backend/app/controllers/links_controller.rb#getNews.
+Add api key and secret for Twitter API at config/credentials.yml file (for Rails.application.credentials method). Use Rails.application.credentials method in the backend's topics controller.
+Add api key for News API at config/credentials.yml file. Use Rails.application.credentials method in the backend's links controller.
 
 Usage:
 Run rails server.
