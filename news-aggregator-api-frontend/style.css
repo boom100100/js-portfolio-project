@@ -1,49 +1,42 @@
-
 body {
   width: 100%;
+  min-width: 330px;
   max-width: 800px;
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
   background-color: #3c4245; /*# 3c4245, 535a5c, 719192, dfcdc3*/
   margin: auto;
 }
 
-div {
-  color: #cccccc;
-  display: inline-block;
-  margin: 10px;
+.top-bar {
+  color: #d16262;
+  font-size: 20px;
+  display: block;
+  overflow:auto;
 }
 
-.top-bar {
-  background-color: #3c4245;
-  margin: 0 20px 0 20px;
-  padding: 10px;
-  display: block;
+.title{
+  display: inline-block;
+  margin: 25px;
+}
 
+#refresh-button {
+  float: right;
+  background-color: #d16262;
+}
+
+#button-span{
+  float: right;
 }
 
 .card {
+  color: #cccccc;
+  display: inline-block;
+  margin: 10px;
   background-color: #535a5c;
   padding: 20px;
   margin-bottom: 10px;
   border-radius: 5px;
 }
-
-h1 {
-  color: #ffe4bf;
-
-}
-
-h2{
-  color: #ffe4bf;
-
-}
-
-h3{
-  color: #fad096;
-
-}
-
 
 .button {
   background-color: #719192; /* Green */
@@ -59,8 +52,6 @@ h3{
 
 
 a {
-
-
   text-decoration: none;
   color: #fad096;
 }
@@ -70,10 +61,6 @@ a.share-link {
 
   float: right;
   font-size: 32px;
-}
-
-#refresh-button {
-  float: right;
 }
 
 a.a-trend {
@@ -89,5 +76,5 @@ a.a-trend:after {
 }
 
 a.a-trend:visited {
-  color: #cf7c7c;
+  color: #d16262;
 }

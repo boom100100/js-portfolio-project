@@ -13,14 +13,14 @@ function setUpRefreshTrends(){
     getTrends('http://localhost:3000/topics/refresh', makeTrendCards);
   }
                     //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
-  new ElementClass('top-bar', 'button', 'refresh-button', 'button', refreshTrends, null, 'Refresh Trends', null, null, null);
+  new ElementClass('button-span', 'button', 'refresh-button', 'button', refreshTrends, 'inline', 'Refresh Trends', null, null, null);
 }
 
 function showSocialShare(){
   //button for sharing on email and twitter
   //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
-  new ElementClass('top-bar', 'a', 'share-link', 'fa fa-twitter share-link', null, null, '', 'https://twitter.com/intent/tweet?text=Find%20reliable%20news%20based%20on%20trending%20topics%20at%20' + window.location.href, 'Share site on Twitter.', '_blank');
-  new ElementClass('top-bar', 'a', 'share-link', 'fa fa-envelope-o share-link', null, null, '', 'mailto:?subject=A%20source%20for%20reliable%20news%20based%20on%20trending%20topics' + '&body=Find%20reliable%20news%20based%20on%20trending%20topics%20at%20' + window.location.href, 'Share site via email.', '_blank');
+  new ElementClass('button-span', 'a', 'share-link', 'fa fa-twitter share-link', null, 'inline', '', 'https://twitter.com/intent/tweet?text=Find%20reliable%20news%20based%20on%20trending%20topics%20at%20' + window.location.href, 'Share site on Twitter.', '_blank');
+  new ElementClass('button-span', 'a', 'share-link', 'fa fa-envelope-o share-link', null, 'inline', '', 'mailto:?subject=A%20source%20for%20reliable%20news%20based%20on%20trending%20topics' + '&body=Find%20reliable%20news%20based%20on%20trending%20topics%20at%20' + window.location.href, 'Share site via email.', '_blank');
 
 }
 
