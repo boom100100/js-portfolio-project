@@ -5,15 +5,46 @@ function doAll(){
   getTrends('http://localhost:3000/topics', makeTrendCards);
   setUpRefreshTrends();
   showSocialShare();
+  sortButton();
 }
 
+function sortButton(){
+  //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
+  new ElementClass('button-span', 'button', 'refresh-button', 'button', sortTrends, 'inline', 'Sort Trends', null, 'Sort trends.', null);
+}
+function sortTrends(){
+
+  fetch('http://localhost:3000/topics')
+  .then(response => response.json())
+  .then(json => {
+    // sort by name
+    json.sort(function(a, b) {
+      var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+      var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+      if (nameA < nameB) {
+        return -1;
+      }
+      if (nameA > nameB) {
+        return 1;
+      }
+
+      // names must be equal
+      return 0;
+    });
+    console.log(json);
+    ElementClass.getElement('main').innerHTML = '';
+    makeTrendCards(json);
+
+  })
+  .catch();
+}
 function setUpRefreshTrends(){
   const refreshTrends = function(){
     ElementClass.getElement('main').innerHTML = '';
     getTrends('http://localhost:3000/topics/refresh', makeTrendCards);
   }
                     //(parent, tag, id, className, onClick, display, innerHTML, href, title, target)
-  new ElementClass('button-span', 'button', 'refresh-button', 'button', refreshTrends, 'inline', 'Refresh Trends', null, null, null);
+  new ElementClass('button-span', 'button', 'refresh-button', 'button', refreshTrends, 'inline', 'Refresh Trends', null, 'Refresh trends.', null);
 }
 
 function showSocialShare(){
@@ -54,6 +85,7 @@ function doPostFetch(maker, trendName){
     })
     .then(function(json){
       //console.log(json);
+      //debugger;
       maker(json, trendName);
   });
 }
@@ -73,7 +105,7 @@ function makeTrendCards(json) {
       searchTrends(trend['name']);
     };
 
-    new ElementClass(trend['name'] + "-div", 'button', trend['name'] + "-button", 'button', buttonOnClick, null, trend['name'], null, null, null);
+    new ElementClass(trend['name'] + "-div", 'button', trend['name'] + "-button", 'button', buttonOnClick, null, trend['name'], null, trend['name'], null);
 
     new ElementClass(trend['name'] + "-div", 'div', trend['name'] + "-no-results", 'no-results', null, 'none', 'This trend returned 0 results.', null, null, null);
     new ElementClass(trend['name'] + "-div", 'div', trend['name'] + "-searching", 'searching', null, 'none', 'Searching...', null, null, null);
@@ -129,7 +161,7 @@ function makeLinkCards(json, trendName){
 }
 
 class ElementClass {
-
+//topics, links classes - may make debugging easier
   constructor(parent, tag, id, className, onClick, display, innerHTML, href, title, target){
     let me = document.createElement(tag);
     me.id = id;
