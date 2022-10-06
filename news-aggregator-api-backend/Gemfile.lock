@@ -42,8 +42,8 @@ GEM
       i18n (>= 0.7, < 2)
       minitest (~> 5.1)
       tzinfo (~> 1.1)
-    addressable (2.7.0)
-      public_suffix (>= 2.0.2, < 5.0)
+    addressable (2.8.1)
+      public_suffix (>= 2.0.2, < 6.0)
     arel (9.0.0)
     bcrypt (3.1.13)
     bootsnap (1.4.6)
@@ -108,6 +108,7 @@ GEM
     mustermann (1.1.1)
       ruby2_keywords (~> 0.0.1)
     naught (1.1.0)
+    news-api (0.2.0)
     nio4r (2.5.2)
     nokogiri (1.10.9)
       mini_portile2 (~> 2.4.0)
@@ -116,7 +117,7 @@ GEM
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
-    public_suffix (4.0.4)
+    public_suffix (5.0.0)
     puma (3.12.4)
     rack (2.2.2)
     rack-cors (1.1.1)
@@ -227,6 +228,7 @@ DEPENDENCIES
   byebug
   capybara
   database_cleaner
+  news-api
   pry
   puma (~> 3.12)
   rack-cors
